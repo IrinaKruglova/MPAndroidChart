@@ -25,9 +25,17 @@
         android:id="@+id/animateY"
         android:title="Animate Y">
     </item>
-        <item
+    <item
         android:id="@+id/animateXY"
         android:title="Animate XY">
+    </item>
+    <item
+        android:id="@+id/animateChange"
+        android:title="Animate Changing Values">
+    </item>
+    <item
+        android:id="@+id/animateAdd"
+        android:title="Animate Addition">
     </item>
     <item
         android:id="@+id/actionDrawCenter"

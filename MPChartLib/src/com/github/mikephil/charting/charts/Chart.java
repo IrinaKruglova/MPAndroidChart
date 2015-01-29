@@ -16,6 +16,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.provider.MediaStore.Images;
+import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -28,6 +29,8 @@ import com.github.mikephil.charting.data.ChartData;
 import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data_animation.ChartDataAnimator;
+import com.github.mikephil.charting.data_animation.IAnimatedChart;
 import com.github.mikephil.charting.interfaces.ChartInterface;
 import com.github.mikephil.charting.interfaces.OnChartGestureListener;
 import com.github.mikephil.charting.interfaces.OnChartValueSelectedListener;
@@ -56,7 +59,7 @@ import java.util.ArrayList;
  */
 public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entry>>> extends
         ViewGroup
-        implements AnimatorUpdateListener, ChartInterface {
+        implements AnimatorUpdateListener, ChartInterface, IAnimatedChart {
 
     public static final String LOG_TAG = "MPChart";
 
@@ -973,7 +976,7 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
      * highlightValues(...), this generates a callback to the
      * OnChartValueSelectedListener.
      *
-     * @param highs
+     * @param high
      */
     public void highlightTouch(Highlight high) {
 
@@ -1074,7 +1077,7 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
      * Returns the actual position in pixels of the MarkerView for the given
      * Entry in the given DataSet.
      *
-     * @param xIndex
+     * @param e
      * @param dataSetIndex
      * @return
      */
@@ -1915,8 +1918,8 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
     /**
      * returns the y-value for the given x-index and DataSet index
      *
-     * @param index
-     * @param dataSet
+     * @param xIndex
+     * @param dataSetIndex
      * @return
      */
     public float getYValue(int xIndex, int dataSetIndex) {
@@ -1939,7 +1942,7 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
      * returns the DataSet with the given label that is stored in the ChartData
      * object.
      *
-     * @param type
+     * @param dataSetLabel
      * @return
      */
     public DataSet<? extends Entry> getDataSetByLabel(String dataSetLabel) {
@@ -2268,4 +2271,37 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
     // initWithDummyData();
     // }
     // }
+
+
+    /////////////IAnimatedChart implementation start/////////////////
+    ChartDataAnimator dataAnimator = new ChartDataAnimator(this);
+
+    @Override
+    public void animationDataUpdate(float scale) {
+        mData.update(scale);
+        ViewCompat.postInvalidateOnAnimation(this);
+    }
+
+    @Override
+    public void animationDataFinished() {
+        mData.finishUpdating();
+        ViewCompat.postInvalidateOnAnimation(this);
+    }
+
+    @Override
+    public void startDataAnimation() {
+        dataAnimator.startAnimation(Long.MIN_VALUE);
+    }
+
+    @Override
+    public void startDataAnimation(long duration) {
+        dataAnimator.startAnimation(duration);
+    }
+
+    @Override
+    public void cancelDataAnimation() {
+        dataAnimator.cancelAnimation();
+    }
+
+    /////////////IAnimatedChart implementation end/////////////////
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.github.mikephil.charting.utils.Highlight;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Class that holds all relevant data that represents the chart. That involves
@@ -345,7 +346,7 @@ public abstract class ChartData<T extends DataSet<? extends Entry>> {
      * situations.
      * 
      * @param dataSets the DataSet array to search
-     * @param type
+     * @param label
      * @param ignorecase if true, the search is not case-sensitive
      * @return
      */
@@ -653,5 +654,25 @@ public abstract class ChartData<T extends DataSet<? extends Entry>> {
         }
 
         return xvals;
+    }
+
+    ////////////methods for animation////////////
+    public void update(float scale) {
+
+        for (DataSet dataSet  : getDataSets()) {
+            for (Object o : dataSet.getYVals()) {
+                Entry e = (Entry) o;
+                e.update(scale);
+            }
+        }
+    }
+
+    public void finishUpdating() {
+        for (DataSet dataSet  : getDataSets()) {
+            for (Object o : dataSet.getYVals()) {
+                Entry e = (Entry) o;
+                e.finishUpdating();
+            }
+        }
     }
 }

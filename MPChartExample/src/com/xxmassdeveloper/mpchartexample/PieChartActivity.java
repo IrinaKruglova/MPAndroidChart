@@ -12,6 +12,8 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.ChartData;
+import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -166,6 +168,22 @@ public class PieChartActivity extends DemoBase implements OnSeekBarChangeListene
                 mChart.animateXY(1800, 1800);
                 break;
             }
+            case R.id.animateChange:
+                for (DataSet<Entry> dataSet : mChart.getData().getDataSets()) {
+                    for (Entry e : dataSet.getYVals()) e.setTarget((float) Math.random() * 30 + 15);
+                }
+                mChart.startDataAnimation();
+                break;
+            case R.id.animateAdd:
+                mChart.getData().getXVals().add("New" + Math.random());
+                for (DataSet<Entry> dataSet : mChart.getData().getDataSets()) {
+                    Entry e = new Entry(0, mChart.getData().getXValCount()-1);
+                    e.setTarget((float) Math.random() * 30 + 15);
+                    dataSet.addEntry(e);
+                }
+                mChart.startDataAnimation();
+                break;
+
         }
         return true;
     }
@@ -198,7 +216,7 @@ public class PieChartActivity extends DemoBase implements OnSeekBarChangeListene
             xVals.add(mParties[i % mParties.length]);
 
         PieDataSet set1 = new PieDataSet(yVals1, "Election Results");
-        set1.setSliceSpace(3f);
+        set1.setSliceSpace(0f);
         
         // add a lot of colors
 

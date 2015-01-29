@@ -27,7 +27,7 @@ public class Entry {
      *            x-values String array)
      */
     public Entry(float val, int xIndex) {
-        mVal = val;
+        setVal(val);
         mXIndex = xIndex;
     }
 
@@ -80,6 +80,8 @@ public class Entry {
      */
     public void setVal(float val) {
         this.mVal = val;
+        this.originValue = val;
+        this.diff = 0f;
     }
 
     /**
@@ -161,5 +163,34 @@ public class Entry {
     @Override
     public String toString() {
         return "Entry, xIndex: " + mXIndex + " val (sum): " + getVal();
+    }
+
+
+
+    //for animation
+
+    /** Origin value of this slice, used during value animation. */
+    private float originValue = 0f;
+
+    /** Difference between originValue and targetValue. */
+    private float diff = 0f;
+
+    public void update(float scale){
+        mVal = originValue + diff * scale;
+    }
+
+    public void finishUpdating(){
+        setVal(originValue + diff);
+    }
+
+    /**
+     * Set target value that should be reached when data animation finish then call {@link com.github.mikephil.charting.data_animation.IAnimatedChart#startDataAnimation()}
+     *
+     * @param target
+     * @return
+     */
+    public void setTarget(float target) {
+        setVal(mVal);
+        diff = target - mVal;
     }
 }
