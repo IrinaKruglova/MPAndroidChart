@@ -175,7 +175,7 @@ public class PieChartActivity extends DemoBase implements OnSeekBarChangeListene
                 mChart.startDataAnimation();
                 break;
             case R.id.animateAdd:
-                mChart.getData().getXVals().add("New" + Math.random());
+                mChart.getData().getXVals().add("New" + (int)(100*Math.random()));
                 for (DataSet<Entry> dataSet : mChart.getData().getDataSets()) {
                     Entry e = new Entry(0, mChart.getData().getXValCount()-1);
                     e.setTarget((float) Math.random() * 30 + 15);

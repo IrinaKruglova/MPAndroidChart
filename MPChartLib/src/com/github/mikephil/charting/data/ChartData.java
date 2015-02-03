@@ -171,6 +171,9 @@ public abstract class ChartData<T extends DataSet<? extends Entry>> {
      */
     public void notifyDataChanged() {
         init();
+        for (DataSet set : mDataSets) {
+            set.notifyDataSetChanged();
+        }
     }
 
     /**

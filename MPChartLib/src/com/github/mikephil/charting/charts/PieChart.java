@@ -12,6 +12,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
@@ -735,7 +736,7 @@ public class PieChart extends PieRadarChartBase<PieData> {
      * sets the radius of the hole in the center of the piechart in percent of
      * the maximum radius (max = the radius of the whole chart), default 50%
      * 
-     * @param size
+     * @param percent
      */
     public void setHoleRadius(final float percent) {
         mHoleRadiusPercent = percent;

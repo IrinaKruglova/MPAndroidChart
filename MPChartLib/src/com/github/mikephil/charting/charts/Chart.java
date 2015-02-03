@@ -2279,22 +2279,28 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
     @Override
     public void animationDataUpdate(float scale) {
         mData.update(scale);
+        getData().notifyDataChanged();
+        prepare();
         ViewCompat.postInvalidateOnAnimation(this);
     }
 
     @Override
     public void animationDataFinished() {
         mData.finishUpdating();
+        getData().notifyDataChanged();
+        prepare();
         ViewCompat.postInvalidateOnAnimation(this);
     }
 
     @Override
     public void startDataAnimation() {
-        dataAnimator.startAnimation(Long.MIN_VALUE);
+        startDataAnimation(Long.MIN_VALUE);
     }
 
     @Override
     public void startDataAnimation(long duration) {
+        getData().notifyDataChanged();
+        prepare();
         dataAnimator.startAnimation(duration);
     }
 
