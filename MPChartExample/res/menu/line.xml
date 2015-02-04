@@ -33,9 +33,17 @@
         android:id="@+id/animateY"
         android:title="Animate Y">
     </item>
-            <item
+    <item
         android:id="@+id/animateXY"
         android:title="Animate XY">
+    </item>
+    <item
+        android:id="@+id/animateChange"
+        android:title="Animate Change">
+    </item>
+    <item
+        android:id="@+id/animateAdd"
+        android:title="Animate Add">
     </item>
     <item
         android:id="@+id/actionToggleAdjustXLegend"

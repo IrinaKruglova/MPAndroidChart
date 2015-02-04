@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarLineChartBase.BorderPosition;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -234,6 +235,21 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
                 mChart.animateXY(3000, 3000);
                 break;
             }
+            case R.id.animateChange:
+                for (DataSet<Entry> dataSet : mChart.getData().getDataSets()) {
+                    for (Entry e : dataSet.getYVals()) e.setTarget((float) Math.random() * 100 + 3 );
+                }
+                mChart.startDataAnimation();
+                break;
+            case R.id.animateAdd:
+                mChart.getData().getXVals().add("New" + (int)(100*Math.random()));
+                for (DataSet<Entry> dataSet : mChart.getData().getDataSets()) {
+                    Entry e = new Entry(0, mChart.getData().getXValCount()-1);
+                    e.setTarget((float) Math.random() * 100 + 3);
+                    dataSet.addEntry(e);
+                }
+                mChart.startDataAnimation();
+                break;
             case R.id.actionToggleAdjustXLegend: {
                 XLabels xLabels = mChart.getXLabels();
 
