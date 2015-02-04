@@ -30,6 +30,14 @@
         android:title="Animate XY">
     </item>
     <item
+        android:id="@+id/animateChange"
+        android:title="Animate Change">
+    </item>
+    <item
+        android:id="@+id/animateAdd"
+        android:title="Animate Addition">
+    </item>
+    <item
         android:id="@+id/actionToggleStartzero"
         android:title="Toggle StartZero">
     </item>

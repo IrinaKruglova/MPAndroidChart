@@ -19,6 +19,7 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.filter.Approximator;
 import com.github.mikephil.charting.data.filter.Approximator.ApproximatorType;
@@ -192,10 +193,24 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
                 break;
             }
             case R.id.animateXY: {
-
                 mChart.animateXY(3000, 3000);
                 break;
             }
+            case R.id.animateChange:
+                for (BarDataSet dataSet : mChart.getData().getDataSets()) {
+                    for (Entry e : dataSet.getYVals()) e.setTarget((float) Math.random() * 30 + 15);
+                }
+                mChart.startDataAnimation();
+                break;
+            case R.id.animateAdd:
+                mChart.getData().getXVals().add("New" + (int)(100*Math.random()));
+                for (BarDataSet dataSet : mChart.getData().getDataSets()) {
+                    BarEntry e = new BarEntry(0, mChart.getData().getXValCount()-1);
+                    e.setTarget((float) Math.random() * 30 + 15);
+                    dataSet.addEntry(e);
+                }
+                mChart.startDataAnimation();
+                break;
             case R.id.actionToggleAdjustXLegend: {
                 XLabels xLabels = mChart.getXLabels();
 
