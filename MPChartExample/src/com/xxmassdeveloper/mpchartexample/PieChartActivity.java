@@ -85,7 +85,15 @@ public class PieChartActivity extends DemoBase implements OnSeekBarChangeListene
 
         // add a selection listener
         mChart.setOnChartValueSelectedListener(this);
-        // mChart.setTouchEnabled(false);
+        mChart.setTouchEnabled(true);
+
+        // create a custom MarkerView (extend MarkerView) and specify the layout
+        // to use for it
+        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
+
+        // set the marker to the chart
+        mChart.setMarkerView(mv);
+        mChart.setDrawMarkerViews(true);
 
         mChart.setCenterText("MPAndroidChart\nLibrary");
 

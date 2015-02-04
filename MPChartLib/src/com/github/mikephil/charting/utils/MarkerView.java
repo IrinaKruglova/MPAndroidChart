@@ -3,6 +3,7 @@ package com.github.mikephil.charting.utils;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -59,6 +60,8 @@ public abstract class MarkerView extends RelativeLayout {
         // take offsets into consideration
         posx += getXOffset();
         posy += getYOffset();
+
+        Log.d("Irina", "! " + posx + " " + posy);
 
         // translate to the correct position and draw
         canvas.translate(posx, posy);

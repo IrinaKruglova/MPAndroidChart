@@ -1019,11 +1019,27 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
     /** the view that represents the marker */
     protected MarkerView mMarkerView;
 
+
+    float touchedX = 0f, touchedY = 0f;
+
+    public void onTouch(float x, float y) {
+        touchedX = x;
+        touchedY = y;
+    }
+
+    protected void drawMarkers() {
+        if (this instanceof PieChart) {
+            drawMarkers(touchedX, touchedY, false);
+        }
+        else {
+            drawMarkers(0f, 0f, true);
+        }
+    }
+
     /**
      * draws all MarkerViews on the highlighted positions
      */
-    protected void drawMarkers() {
-
+    protected void drawMarkers(float xTouch, float yTouch, boolean positionAutodetect) {
         // if there is no marker view or drawing marker is disabled
         if (mMarkerView == null || !mDrawMarkerViews || !valuesToHighlight())
             return;
@@ -1041,7 +1057,8 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
                 if (e == null)
                     continue;
 
-                float[] pos = getMarkerPosition(e, dataSetIndex);
+                float[] pos = positionAutodetect ? getMarkerPosition(e, dataSetIndex)
+                        : new float[] {xTouch, yTouch};
 
                 // check bounds
                 if (pos[0] < mOffsetLeft || pos[0] > getWidth() - mOffsetRight
@@ -1063,12 +1080,11 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
                 mMarkerView.layout(0, 0, mMarkerView.getMeasuredWidth(),
                         mMarkerView.getMeasuredHeight());
 
-                if (pos[1] - mMarkerView.getHeight() <= 0) {
-                    float y = mMarkerView.getHeight() - pos[1];
-                    mMarkerView.draw(mDrawCanvas, pos[0], pos[1] + y);
-                } else {
-                    mMarkerView.draw(mDrawCanvas, pos[0], pos[1]);
+                if (pos[1] <= mMarkerView.getHeight()) {
+                    pos[1] = mMarkerView.getHeight();
                 }
+
+                mMarkerView.draw(mDrawCanvas, pos[0], pos[1]);
             }
         }
     }

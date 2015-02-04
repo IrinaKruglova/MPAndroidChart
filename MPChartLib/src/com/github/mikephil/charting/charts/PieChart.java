@@ -146,6 +146,8 @@ public class PieChart extends PieRadarChartBase<PieData> {
 
         drawCenterText();
 
+        drawMarkers();
+
         canvas.drawBitmap(mDrawBitmap, 0, 0, mDrawPaint);
     }
 
@@ -211,7 +213,7 @@ public class PieChart extends PieRadarChartBase<PieData> {
     @Override
     protected void drawHighlights() {
 
-        // if there are values to highlight and highlighnting is enabled, do it
+        // if there are values to highlight and highlighting is enabled, do it
         if (mHighlightEnabled && valuesToHighlight()) {
 
             float angle = 0f;

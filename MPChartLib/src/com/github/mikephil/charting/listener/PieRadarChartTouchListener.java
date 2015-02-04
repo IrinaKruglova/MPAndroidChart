@@ -156,6 +156,7 @@ public class PieRadarChartTouchListener extends SimpleOnGestureListener implemen
                 }
             }
         }
+        mChart.onTouch(e.getX(), e.getY());
 
         return true;
     }
